@@ -15,10 +15,13 @@ if __name__ == "__main__":
         print(f"Starting server from directory: {backend_dir}")
         print(f"Python path: {sys.path}")
         
+        # Get port from environment variable or use default
+        port = int(os.getenv("PORT", "10000"))
+        
         uvicorn.run(
             "app.main:app",  # Use import string instead of app instance
             host="0.0.0.0",
-            port=8000,
+            port=port,
             reload=True,
             reload_dirs=[str(app_dir)],
             log_level="debug"  # Changed to debug for more detailed logs
