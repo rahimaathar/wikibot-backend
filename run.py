@@ -10,9 +10,6 @@ app_dir = backend_dir / "app"
 # Add the backend directory to Python path
 sys.path.insert(0, str(backend_dir))
 
-# Import the FastAPI app
-from app.main import app
-
 if __name__ == "__main__":
     try:
         print(f"Starting server from directory: {backend_dir}")
@@ -21,13 +18,13 @@ if __name__ == "__main__":
         # Get port from environment variable or use default
         port = int(os.getenv("PORT", "8000"))
         
+        # Use import string format for uvicorn.run
         uvicorn.run(
-            app,  # Use the imported app instance directly
+            "app.main:app",  # Use import string format
             host="0.0.0.0",
             port=port,
-            reload=True,  # Enable reload for development
-            reload_dirs=[str(app_dir)],
-            log_level="debug"  # Use debug level for development
+            reload=False,  # Disable reload in production
+            log_level="info"  # Use info level for production
         )
     except Exception as e:
         print(f"Error starting server: {str(e)}")
